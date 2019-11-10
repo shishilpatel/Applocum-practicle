@@ -17,10 +17,10 @@ class UsersTableSeeder extends Seeder
         $faker = Faker\Factory::create();
         $profile = new Profile();
         $adminRole = Role::whereName('Admin')->first();
-        $userRole = Role::whereName('User')->first();
+        $compnayRole = Role::whereName('Company')->first();
 
         // Seed test admin
-        $seededAdminEmail = 'admin@admin.com';
+        $seededAdminEmail = 'applocumadmin@yopmail.com';
         $user = User::where('email', '=', $seededAdminEmail)->first();
         if ($user === null) {
             $user = User::create([
@@ -28,7 +28,7 @@ class UsersTableSeeder extends Seeder
                 'first_name'                     => $faker->firstName,
                 'last_name'                      => $faker->lastName,
                 'email'                          => $seededAdminEmail,
-                'password'                       => Hash::make('password'),
+                'password'                       => Hash::make('Password@123'),
                 'token'                          => str_random(64),
                 'activated'                      => true,
                 'signup_confirmation_ip_address' => $faker->ipv4,
@@ -41,14 +41,14 @@ class UsersTableSeeder extends Seeder
         }
 
         // Seed test user
-        $user = User::where('email', '=', 'user@user.com')->first();
+        $user = User::where('email', '=', 'applocumcompany@yopmail.com')->first();
         if ($user === null) {
             $user = User::create([
                 'name'                           => $faker->userName,
                 'first_name'                     => $faker->firstName,
                 'last_name'                      => $faker->lastName,
-                'email'                          => 'user@user.com',
-                'password'                       => Hash::make('password'),
+                'email'                          => 'applocumcompany@yopmail.com',
+                'password'                       => Hash::make('Password@123'),
                 'token'                          => str_random(64),
                 'activated'                      => true,
                 'signup_ip_address'              => $faker->ipv4,
@@ -56,7 +56,7 @@ class UsersTableSeeder extends Seeder
             ]);
 
             $user->profile()->save(new Profile());
-            $user->attachRole($userRole);
+            $user->attachRole($companyRole);
             $user->save();
         }
 
